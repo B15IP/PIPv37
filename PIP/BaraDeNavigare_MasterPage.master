@@ -1,0 +1,128 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="BaraDeNavigare_MasterPage.master.cs" Inherits="BaraDeNavigare_MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head runat="server">
+    <title></title>
+   <%-- <link rel="stylesheet" type="text/css" href="styles.css">--%>
+     <link rel="stylesheet" type="text/css" href="chestii.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+       <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <asp:ContentPlaceHolder id="head" runat="server">
+       
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+  
+    <div class="navbar navbar-default">
+
+        <div id="Baradenavigare">
+            <div id="navigation">
+            <div id="Baradenagivarebutoane">
+                
+                
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+
+          <asp:Image ID="Image1" runat="server" src="logo.png"/>
+
+					<ul class="nav navbar-nav">   
+                        <li><asp:LinkButton ID="LinkButtonhome" runat="server" OnClick="home_click">Home</asp:LinkButton></li>
+
+                        <li><asp:LinkButton ID="LinkButtonprofil" runat="server"  OnClick="profil_click">Profil</asp:LinkButton></li>
+                    
+                        <li><asp:LinkButton ID="LinkButtonContact" runat="server" OnClick="contact_click">Contact</asp:LinkButton></li>
+                        </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><asp:LinkButton ID="LinkButtoninregistrare" runat="server" OnClick="inregistrare_click">Inregistrare</asp:LinkButton></li>
+
+                        <li><asp:LinkButton ID="LinkButtonlogin" runat="server" OnClick="login_click">Log in</asp:LinkButton></li>
+
+                       <li>   <asp:Label ID="nume_logat"  runat="server"></asp:Label> <asp:LinkButton ID="LinkButtonlogout" runat="server" OnClick="logout_click">Log out</asp:LinkButton></li>
+
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolderFacebook" runat="server">
+
+                        </asp:ContentPlaceHolder>
+                         </ul>
+                </div>
+             
+              </div>
+        </div>
+       
+
+   <div id="body">
+        <asp:Panel ID="Panelinreg" style="position:relative;left:25%;top:50%" runat="server" Visible="false">
+            
+            <asp:Label ID="Label1" runat="server" Text="Nume cont*"></asp:Label>
+            <br/>
+            <asp:TextBox class="form-control" ID="TextBoxacont" style="max-width:15%" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Label ID="Label2" runat="server" Text="Nume"></asp:Label>
+             <br/>
+            <asp:TextBox class="form-control" style="max-width:15%" ID="TextBoxnume" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Label ID="Label3" runat="server" Text="Prenume"></asp:Label>
+             <br/>
+            <asp:TextBox class="form-control" style="max-width:15%" ID="TextBoxprenume" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Label ID="Label4" runat="server" Text="E-mail"></asp:Label>
+             <br/>
+            <asp:TextBox class="form-control" style="max-width:15%" ID="TextBoxemail" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Label ID="Label5" runat="server" Text="Parola*"></asp:Label>
+             <br/>
+            <asp:TextBox class="form-control" style="max-width:15%" ID="TextBoxparola" TextMode="password" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Label ID="Label6" runat="server" Text="Confirmare parola*"></asp:Label>
+             <br/>
+            <asp:TextBox class="form-control" style="max-width:15%" ID="TextBoxparola2" TextMode="password" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Button ID="Buttoncreare" CssClass="css_button" runat="server" Text="Creare" OnClick="Buttoncreare_Click" />
+            <asp:Button ID="Buttonascunde" CssClass="button_ascunde" runat="server" Text="Ascunde" OnClick="Buttonascunde_Click" />
+            <br />
+            <br />
+            <asp:Label ID="Label7" runat="server" Text="Campurile cu * sunt obligatorii" Style="color: red"></asp:Label>
+            <br />
+            <br />
+               
+            <asp:Label ID="Labelinregeroare" runat="server" Text=""></asp:Label>
+        </asp:Panel>
+
+        <asp:Panel ID="Panellogin" runat="server" Visible="false" style="position:relative;left:25%;top:50%">
+            <asp:Label ID="Label8" runat="server" Text="Cont"></asp:Label>
+            <asp:TextBox class="form-control" ID="TextBoxlogina" style="max-width:15%" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Label ID="Label9" runat="server" Text="Parola"></asp:Label>
+            <asp:TextBox class="form-control" ID="TextBoxloginp" TextMode="password" style="max-width:15%" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Button CssClass="css_button" ID="Buttonlogin" runat="server" OnClick="Buttonlogin_Click" Text="Log in" />
+            <br />
+            <br />
+            <asp:Label ID="Labellogineroare" runat="server" Text="" style="color:red"></asp:Label>
+            <br />
+            <br />
+        </asp:Panel>
+        <div>
+            </div>
+    </div>
+        </div>
+        </div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+
+            </asp:ContentPlaceHolder>
+        
+
+
+     </form>
+    
+</body>
+</html>

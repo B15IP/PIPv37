@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PIPModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="PIPModelStoreContainer">
+          <EntitySet Name="documente" EntityType="PIPModel.Store.documente" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="evenimente" EntityType="PIPModel.Store.evenimente" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="locatie" EntityType="PIPModel.Store.locatie" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="organizeaza" EntityType="PIPModel.Store.organizeaza" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="participa" EntityType="PIPModel.Store.participa" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="replici" EntityType="PIPModel.Store.replici" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="roluri" EntityType="PIPModel.Store.roluri" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tranzitii" EntityType="PIPModel.Store.tranzitii" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="utilizator" EntityType="PIPModel.Store.utilizator" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_organizeaza_eveniment" Association="PIPModel.Store.FK_organizeaza_eveniment">
+            <End Role="evenimente" EntitySet="evenimente" />
+            <End Role="organizeaza" EntitySet="organizeaza" />
+          </AssociationSet>
+          <AssociationSet Name="FK_organizeaza_utilizator" Association="PIPModel.Store.FK_organizeaza_utilizator">
+            <End Role="utilizator" EntitySet="utilizator" />
+            <End Role="organizeaza" EntitySet="organizeaza" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proprietar_evenimente_utilizator" Association="PIPModel.Store.FK_proprietar_evenimente_utilizator">
+            <End Role="utilizator" EntitySet="utilizator" />
+            <End Role="evenimente" EntitySet="evenimente" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="documente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="id_eveniment" Type="int" />
+          <Property Name="document" Type="varchar" MaxLength="50" />
+          <Property Name="data_incarcare" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="evenimente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="nume" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="descriere" Type="varchar" MaxLength="128" />
+          <Property Name="etichete" Type="varchar" Nullable="false" MaxLength="128" />
+          <Property Name="data_inceperii" Type="date" />
+          <Property Name="oras" Type="varchar" MaxLength="50" />
+          <Property Name="judet" Type="varchar" MaxLength="50" />
+          <Property Name="tara" Type="varchar" MaxLength="50" />
+          <Property Name="expunere" Type="nchar" MaxLength="10" />
+          <Property Name="id_proprietar" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="locatie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="latitudine" Type="varchar" MaxLength="50" />
+          <Property Name="longitutine" Type="varchar" MaxLength="50" />
+          <Property Name="numar_voturi" Type="int" />
+        </EntityType>
+        <EntityType Name="organizeaza">
+          <Key>
+            <PropertyRef Name="id_organizator" />
+            <PropertyRef Name="id_eveniment" />
+          </Key>
+          <Property Name="id_organizator" Type="int" Nullable="false" />
+          <Property Name="id_eveniment" Type="int" Nullable="false" />
+          <Property Name="aprobat" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="participa">
+          <Key>
+            <PropertyRef Name="id_utilizator" />
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_utilizator" Type="int" Nullable="false" />
+          <Property Name="id_rol" Type="int" Nullable="false" />
+          <Property Name="id_eveniment" Type="int" />
+        </EntityType>
+        <EntityType Name="replici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id_eveniment" Type="int" Nullable="false" />
+          <Property Name="id_parinte" Type="int" Nullable="false" />
+          <Property Name="text" Type="varchar" Nullable="false" MaxLength="500" />
+          <Property Name="autor" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="data" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="roluri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="id_eveniment" Type="int" />
+          <Property Name="denumire" Type="varchar" MaxLength="50" />
+          <Property Name="descriere" Type="varchar" MaxLength="300" />
+          <Property Name="max_participanti" Type="int" />
+        </EntityType>
+        <EntityType Name="tranzitii">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="id_actiune_initiala" Type="int" Nullable="false" />
+          <Property Name="id_actiune_noua" Type="int" />
+          <Property Name="id_rol" Type="nchar" MaxLength="10" />
+          <Property Name="min_actori" Type="nchar" MaxLength="10" />
+          <Property Name="max_actor" Type="nchar" MaxLength="10" />
+          <Property Name="id_locatie" Type="nchar" MaxLength="10" />
+          <Property Name="data" Type="datetime" />
+        </EntityType>
+        <EntityType Name="utilizator">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="acont" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="nume" Type="varchar" MaxLength="50" />
+          <Property Name="prenume" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="parola" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="oras" Type="varchar" MaxLength="50" />
+          <Property Name="tara" Type="varchar" MaxLength="50" />
+          <Property Name="judet" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_organizeaza_eveniment">
+          <End Role="evenimente" Type="PIPModel.Store.evenimente" Multiplicity="1" />
+          <End Role="organizeaza" Type="PIPModel.Store.organizeaza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="evenimente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="organizeaza">
+              <PropertyRef Name="id_eveniment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_organizeaza_utilizator">
+          <End Role="utilizator" Type="PIPModel.Store.utilizator" Multiplicity="1" />
+          <End Role="organizeaza" Type="PIPModel.Store.organizeaza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="utilizator">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="organizeaza">
+              <PropertyRef Name="id_organizator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proprietar_evenimente_utilizator">
+          <End Role="utilizator" Type="PIPModel.Store.utilizator" Multiplicity="1" />
+          <End Role="evenimente" Type="PIPModel.Store.evenimente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="utilizator">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="evenimente">
+              <PropertyRef Name="id_proprietar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PIPModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PIPEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="documentes" EntityType="PIPModel.documente" />
+          <EntitySet Name="evenimentes" EntityType="PIPModel.evenimente" />
+          <EntitySet Name="locaties" EntityType="PIPModel.locatie" />
+          <EntitySet Name="organizeazas" EntityType="PIPModel.organizeaza" />
+          <EntitySet Name="participas" EntityType="PIPModel.participa" />
+          <EntitySet Name="replicis" EntityType="PIPModel.replici" />
+          <EntitySet Name="roluris" EntityType="PIPModel.roluri" />
+          <EntitySet Name="tranzitiis" EntityType="PIPModel.tranzitii" />
+          <EntitySet Name="utilizators" EntityType="PIPModel.utilizator" />
+          <AssociationSet Name="FK_organizeaza_eveniment" Association="PIPModel.FK_organizeaza_eveniment">
+            <End Role="evenimente" EntitySet="evenimentes" />
+            <End Role="organizeaza" EntitySet="organizeazas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proprietar_evenimente_utilizator" Association="PIPModel.FK_proprietar_evenimente_utilizator">
+            <End Role="utilizator" EntitySet="utilizators" />
+            <End Role="evenimente" EntitySet="evenimentes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_organizeaza_utilizator" Association="PIPModel.FK_organizeaza_utilizator">
+            <End Role="utilizator" EntitySet="utilizators" />
+            <End Role="organizeaza" EntitySet="organizeazas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="documente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="id_eveniment" Type="Int32" />
+          <Property Name="document" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="data_incarcare" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="evenimente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="nume" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="descriere" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="etichete" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="data_inceperii" Type="DateTime" Precision="0" />
+          <Property Name="oras" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="judet" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="tara" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="expunere" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="id_proprietar" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="organizeazas" Relationship="PIPModel.FK_organizeaza_eveniment" FromRole="evenimente" ToRole="organizeaza" />
+          <NavigationProperty Name="utilizator" Relationship="PIPModel.FK_proprietar_evenimente_utilizator" FromRole="evenimente" ToRole="utilizator" />
+        </EntityType>
+        <EntityType Name="locatie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="latitudine" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="longitutine" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="numar_voturi" Type="Int32" />
+        </EntityType>
+        <EntityType Name="organizeaza">
+          <Key>
+            <PropertyRef Name="id_organizator" />
+            <PropertyRef Name="id_eveniment" />
+          </Key>
+          <Property Name="id_organizator" Type="Int32" Nullable="false" />
+          <Property Name="id_eveniment" Type="Int32" Nullable="false" />
+          <Property Name="aprobat" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="evenimente" Relationship="PIPModel.FK_organizeaza_eveniment" FromRole="organizeaza" ToRole="evenimente" />
+          <NavigationProperty Name="utilizator" Relationship="PIPModel.FK_organizeaza_utilizator" FromRole="organizeaza" ToRole="utilizator" />
+        </EntityType>
+        <EntityType Name="participa">
+          <Key>
+            <PropertyRef Name="id_utilizator" />
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_utilizator" Type="Int32" Nullable="false" />
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <Property Name="id_eveniment" Type="Int32" />
+        </EntityType>
+        <EntityType Name="replici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="id_eveniment" Type="Int32" Nullable="false" />
+          <Property Name="id_parinte" Type="Int32" Nullable="false" />
+          <Property Name="text" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="autor" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="data" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="roluri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="id_eveniment" Type="Int32" />
+          <Property Name="denumire" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="descriere" Type="String" MaxLength="300" Unicode="false" FixedLength="false" />
+          <Property Name="max_participanti" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tranzitii">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="id_actiune_initiala" Type="Int32" Nullable="false" />
+          <Property Name="id_actiune_noua" Type="Int32" />
+          <Property Name="id_rol" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="min_actori" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="max_actor" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="id_locatie" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="data" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="utilizator">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="acont" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="nume" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="prenume" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="parola" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="oras" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="tara" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="judet" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="evenimentes" Relationship="PIPModel.FK_proprietar_evenimente_utilizator" FromRole="utilizator" ToRole="evenimente" />
+          <NavigationProperty Name="organizeazas" Relationship="PIPModel.FK_organizeaza_utilizator" FromRole="utilizator" ToRole="organizeaza" />
+        </EntityType>
+        <Association Name="FK_organizeaza_eveniment">
+          <End Role="evenimente" Type="PIPModel.evenimente" Multiplicity="1" />
+          <End Role="organizeaza" Type="PIPModel.organizeaza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="evenimente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="organizeaza">
+              <PropertyRef Name="id_eveniment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proprietar_evenimente_utilizator">
+          <End Role="utilizator" Type="PIPModel.utilizator" Multiplicity="1" />
+          <End Role="evenimente" Type="PIPModel.evenimente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="utilizator">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="evenimente">
+              <PropertyRef Name="id_proprietar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_organizeaza_utilizator">
+          <End Role="utilizator" Type="PIPModel.utilizator" Multiplicity="1" />
+          <End Role="organizeaza" Type="PIPModel.organizeaza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="utilizator">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="organizeaza">
+              <PropertyRef Name="id_organizator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PIPModelStoreContainer" CdmEntityContainer="PIPEntities">
+          <EntitySetMapping Name="documentes">
+            <EntityTypeMapping TypeName="PIPModel.documente">
+              <MappingFragment StoreEntitySet="documente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="id_eveniment" ColumnName="id_eveniment" />
+                <ScalarProperty Name="document" ColumnName="document" />
+                <ScalarProperty Name="data_incarcare" ColumnName="data_incarcare" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="evenimentes">
+            <EntityTypeMapping TypeName="PIPModel.evenimente">
+              <MappingFragment StoreEntitySet="evenimente">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="descriere" ColumnName="descriere" />
+                <ScalarProperty Name="etichete" ColumnName="etichete" />
+                <ScalarProperty Name="data_inceperii" ColumnName="data_inceperii" />
+                <ScalarProperty Name="oras" ColumnName="oras" />
+                <ScalarProperty Name="judet" ColumnName="judet" />
+                <ScalarProperty Name="tara" ColumnName="tara" />
+                <ScalarProperty Name="expunere" ColumnName="expunere" />
+                <ScalarProperty Name="id_proprietar" ColumnName="id_proprietar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="locaties">
+            <EntityTypeMapping TypeName="PIPModel.locatie">
+              <MappingFragment StoreEntitySet="locatie">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="latitudine" ColumnName="latitudine" />
+                <ScalarProperty Name="longitutine" ColumnName="longitutine" />
+                <ScalarProperty Name="numar_voturi" ColumnName="numar_voturi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizeazas">
+            <EntityTypeMapping TypeName="PIPModel.organizeaza">
+              <MappingFragment StoreEntitySet="organizeaza">
+                <ScalarProperty Name="id_organizator" ColumnName="id_organizator" />
+                <ScalarProperty Name="id_eveniment" ColumnName="id_eveniment" />
+                <ScalarProperty Name="aprobat" ColumnName="aprobat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="participas">
+            <EntityTypeMapping TypeName="PIPModel.participa">
+              <MappingFragment StoreEntitySet="participa">
+                <ScalarProperty Name="id_utilizator" ColumnName="id_utilizator" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="id_eveniment" ColumnName="id_eveniment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="replicis">
+            <EntityTypeMapping TypeName="PIPModel.replici">
+              <MappingFragment StoreEntitySet="replici">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="id_eveniment" ColumnName="id_eveniment" />
+                <ScalarProperty Name="id_parinte" ColumnName="id_parinte" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="autor" ColumnName="autor" />
+                <ScalarProperty Name="data" ColumnName="data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roluris">
+            <EntityTypeMapping TypeName="PIPModel.roluri">
+              <MappingFragment StoreEntitySet="roluri">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="id_eveniment" ColumnName="id_eveniment" />
+                <ScalarProperty Name="denumire" ColumnName="denumire" />
+                <ScalarProperty Name="descriere" ColumnName="descriere" />
+                <ScalarProperty Name="max_participanti" ColumnName="max_participanti" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tranzitiis">
+            <EntityTypeMapping TypeName="PIPModel.tranzitii">
+              <MappingFragment StoreEntitySet="tranzitii">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="id_actiune_initiala" ColumnName="id_actiune_initiala" />
+                <ScalarProperty Name="id_actiune_noua" ColumnName="id_actiune_noua" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="min_actori" ColumnName="min_actori" />
+                <ScalarProperty Name="max_actor" ColumnName="max_actor" />
+                <ScalarProperty Name="id_locatie" ColumnName="id_locatie" />
+                <ScalarProperty Name="data" ColumnName="data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="utilizators">
+            <EntityTypeMapping TypeName="PIPModel.utilizator">
+              <MappingFragment StoreEntitySet="utilizator">
+                <ScalarProperty Name="acont" ColumnName="acont" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="prenume" ColumnName="prenume" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="parola" ColumnName="parola" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="oras" ColumnName="oras" />
+                <ScalarProperty Name="tara" ColumnName="tara" />
+                <ScalarProperty Name="judet" ColumnName="judet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
